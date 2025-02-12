@@ -3,6 +3,7 @@ package MVC.View;
 import Game.Game;
 import MVC.Controller.Controller;
 import Player.Player;
+import Player.HumanPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,11 +89,15 @@ public class View extends JFrame {
 			}
 		}
 
-
 		if(this.controller.getGame().endGame(new Player[]{this.controller.getPlayer1(), this.controller.getPlayer2()}))
 			this.endGame("Game Over!");
-		else
+		else {
 			this.updateCurrentPlayer(this.controller.getCurrentPlayer().getPlayerId());
+			if(this.controller.getCurrentPlayer() instanceof HumanPlayer)
+				enablePlayerInput(true);
+			else
+				enablePlayerInput(false);
+		}
 	}
 
 
@@ -110,11 +115,9 @@ public class View extends JFrame {
 		if (playerId == RED) {
 			getContentPane().setBackground(Color.RED);
 			currentPlayerLabel.setText("Player 1's turn (RED)");
-			enablePlayerInput(true);
 		} else {
 			getContentPane().setBackground(Color.YELLOW);
 			currentPlayerLabel.setText("Player 2's turn (YELLOW)");
-			enablePlayerInput(false);
 		}
 	}
 
