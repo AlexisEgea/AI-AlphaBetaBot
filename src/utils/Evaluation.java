@@ -8,19 +8,19 @@ import static utils.Constant.EMPTY;
 
 
 public class Evaluation {
-    public static int eval(Game game , Player player) {
+    public static int eval(Game game, Player player) {
         int score = 0;
         int scoreCell;
 
         // Nobody won
-        if (game.isGridFull())
+        if (game.drawGame())
             return 0;
 
-        for (int column = 0; column < game.getColumnSize(); column++) {
-            for (int line = 0; line < game.getLineSize(); line++) {
-                if (game.getCell(column, line) != EMPTY) {
+        for (int column = 0; column < game.getGrid().getColumnSize(); column++) {
+            for (int line = 0; line < game.getGrid().getLineSize(); line++) {
+                if (game.getGrid().getCell(column, line) != EMPTY) {
                     scoreCell = Evaluation.scoreCell(game, column, line);
-                    if (game.getCell(column, line) == player.getPlayerId())
+                    if (game.getGrid().getCell(column, line) == player.getPlayerId())
                         score += scoreCell;
                     else
                         score -= scoreCell;
@@ -35,7 +35,7 @@ public class Evaluation {
                 { { -1, 0 }, { -1, -1 }, { 0, -1 }, { -1, 1 } } // To the left
         };
 
-        int playerCell = game.getCell(column, line);
+        int playerCell = game.getGrid().getCell(column, line);
 
         int x, y, directionScore, totalScore = 0, distance = 1;
 
@@ -47,12 +47,12 @@ public class Evaluation {
 
                 x = column + dir[s][d][0];
                 y = line + dir[s][d][1];
-                while (x < game.getColumnSize() && x >= 0 && y < game.getLineSize() && y >= 0 && distance <= 3) {
-                    if (game.getCell(x, y) != EMPTY && game.getCell(x, y) != playerCell) {
+                while (x < game.getGrid().getColumnSize() && x >= 0 && y < game.getGrid().getLineSize() && y >= 0 && distance <= 3) {
+                    if (game.getGrid().getCell(x, y) != EMPTY && game.getGrid().getCell(x, y) != playerCell) {
                         directionScore = 0;
                         break;
                     }
-                    if (game.getCell(x, y) != EMPTY && game.getCell(x, y) == playerCell)
+                    if (game.getGrid().getCell(x, y) != EMPTY && game.getGrid().getCell(x, y) == playerCell)
                         directionScore++;
 
                     distance++;
