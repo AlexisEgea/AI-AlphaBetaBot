@@ -1,25 +1,18 @@
 package Game;
 
+import Grid.Grid;
 import Player.Player;
 
 import java.util.ArrayList;
 
-public abstract class Game<T> {
-    protected T grid;
+public abstract class Game {
+    protected Grid grid;
 
-    protected int columnSize;
-    protected int lineSize;
+    public Game(){}
 
-    public Game(){
-        this.columnSize = 0;
-        this.lineSize = 0;
-    }
+    public abstract void initGame(int columnSize, int lineSize);
 
-    public abstract int getCell(int column, int line);
-
-    public abstract void initGame(int xSize, int ySize);
-
-    public abstract Boolean playAction(int playerId, int action);
+    public abstract Boolean playAction(Player player, int action);
 
     public abstract void undoAction();
 
@@ -27,13 +20,11 @@ public abstract class Game<T> {
 
     public abstract Boolean endGame(Player[] players);
 
-    public abstract Boolean isGridFull();
+    // Nobody won
+    public abstract Boolean drawGame();
 
-    public int getColumnSize() {
-        return this.columnSize;
+    public Grid getGrid() {
+        return this.grid;
     }
 
-    public int getLineSize() {
-        return lineSize;
-    }
 }

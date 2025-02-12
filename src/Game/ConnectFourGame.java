@@ -1,65 +1,50 @@
 package Game;
 
+import Grid.ConnectFourGrid;
+
 import Player.Player;
 import java.util.Stack;
 import java.util.ArrayList;
 
 import static utils.Constant.*;
 
-public class ConnectFour extends Game<int[][]> {
+public class ConnectFourGame extends Game {
     private Stack<int[]> moveHistory; // Stack to store move history
 
-    public ConnectFour(int columnSize, int lineSize) {
+    public ConnectFourGame() {
         super();
-        this.initGame(columnSize, lineSize);
-    }
-
-    @Override
-    public int getCell(int column, int line) {
-        return this.grid[column][line];
-    }
-
-    @Override
-    public int [][] getGrid() {
-        return this.grid;
+        this.initGame(7, 6);
     }
 
     @Override
     public void initGame(int columnSize, int lineSize) {
-        this.columnSize = columnSize;
-        this.lineSize = lineSize;
-        this.grid = new int[this.columnSize][this.lineSize];
-        this.moveHistory = new Stack<>();
-
-        for (int i = 0; i < this.columnSize; i++) {
-            for (int j = 0; j < this.lineSize; j++) {
-                this.grid[i][j] = EMPTY;
-            }
-        }
+         this.grid = new ConnectFourGrid(columnSize, lineSize);
+         this.grid.initGrid(this.grid.getColumnSize(), this.grid.getLineSize());
+         this.moveHistory = new Stack<>();
     }
 
     @Override
-    public Boolean playAction(int playerId, int action){
+    public Boolean playAction(Player player, int action){
         action--;
-        if (action >= 0 && action < this.columnSize) {
-            if (this.isColumnFull(action)){
+        if (action >= 0 && action < this.grid.getColumnSize()) {
+            if (((ConnectFourGrid) this.grid).isColumnFull(action)){
                 System.out.println("Error Size Column: Column " + action + " is full");
                 return false;
             }
 
-            for (int line = this.lineSize - 1; line >= 0; line--) {
-                if (this.grid[action][line] == EMPTY) {
-                    this.grid[action][line] = playerId;
+            for (int line = this.grid.getLineSize() - 1; line >= 0; line--) {
+                if (this.grid.getCell(action, line) == EMPTY) {
+                    this.grid.setCell(action, line, player.getPlayerId());
                     moveHistory.push(new int[]{action, line});
-                    System.out.println("Player ID " + playerId + " Action: " + action);
-                    System.out.println(this);
+                    System.out.println("Player ID " + player.getPlayerId() + " Action: " + action);
+                    System.out.println(this.getGrid());
 
                     return true;
                 }
             }
         } else {
             action++;
-            System.out.println("Error: Action " + action + " out of bound -> " + this.columnSize);
+            System.out.println("Error: Action " + action + " out of bound -> " + this.grid.getColumnSize());
             return false;
         }
         return false;
@@ -68,22 +53,18 @@ public class ConnectFour extends Game<int[][]> {
     @Override
     public void undoAction() {
         int[] lastMove = moveHistory.pop();
-        this.grid[lastMove[0]][lastMove[1]] = EMPTY;
+        this.grid.setCell(lastMove[0], lastMove[1], EMPTY);
     }
 
     @Override
     public ArrayList<Integer> getPossibleMoves() {
         ArrayList<Integer> possibleMoves = new ArrayList<>();
-        for (int column = 0; column < this.columnSize; column++) {
-            if (!isColumnFull(column)) {
+        for (int column = 0; column < this.grid.getColumnSize(); column++) {
+            if (!((ConnectFourGrid) this.grid).isColumnFull(column)) {
                 possibleMoves.add(column + 1);
             }
         }
         return possibleMoves;
-    }
-
-    public Boolean isColumnFull(int column) {
-        return this.grid[column][0] != EMPTY;
     }
 
     @Override
@@ -97,7 +78,7 @@ public class ConnectFour extends Game<int[][]> {
             }
         }
 
-        if (this.isGridFull()) {
+        if (this.drawGame()) {
             System.out.println("Grid FULL, nobody wins the game 0_0");
             return true;
         }
@@ -106,9 +87,9 @@ public class ConnectFour extends Game<int[][]> {
     }
 
     public Boolean searchFourPiece(int playerId) {
-        for (int x = 0; x < this.columnSize; x++) {
-            for (int y = 0; y < this.lineSize; y++) {
-                if (this.grid[x][y] == playerId) {
+        for (int x = 0; x < this.grid.getColumnSize(); x++) {
+            for (int y = 0; y < this.grid.getLineSize(); y++) {
+                if (this.grid.getCell(x, y) == playerId) {
                     if (checkDirection(x, y, 1, 0, playerId) || //      →
                             checkDirection(x, y, 0, 1, playerId) || //  ↓
                             checkDirection(x, y, 1, 1, playerId) || //  ↘
@@ -127,11 +108,11 @@ public class ConnectFour extends Game<int[][]> {
             int newX = x + i * dx;
             int newY = y + i * dy;
 
-            if (newX < 0 || newX >= this.columnSize || newY < 0 || newY >= this.lineSize) {
+            if (newX < 0 || newX >= this.grid.getColumnSize() || newY < 0 || newY >= this.grid.getLineSize()) {
                 return false;
             }
 
-            if (this.grid[newX][newY] != playerId) {
+            if (this.grid.getCell(newX, newY) != playerId) {
                 return false;
             }
         }
@@ -139,37 +120,9 @@ public class ConnectFour extends Game<int[][]> {
     }
 
     @Override
-    public Boolean isGridFull() {
-        for (int column = 0; column < this.columnSize; column++) {
-            for (int line = 0; line < this.lineSize; line++) {
-                if (this.grid[column][line] == EMPTY)
-                    return false;
-            }
-        }
-        return true;
+    public Boolean drawGame(){
+        return ((ConnectFourGrid) this.grid).isGridFull();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
 
-        for (int j = 0; j < lineSize; j++) {
-            for (int i = 0; i < columnSize; i++) {
-                if (grid[i][j] == EMPTY) {
-                    sb.append("· ");
-                } else if (grid[i][j] == RED) {
-                    sb.append("R ");
-                } else if (grid[i][j] == YELLOW) {
-                    sb.append("Y ");
-                }
-            }
-            sb.append("\n");
-        }
-
-        for (int i = 0; i < columnSize; i++) {
-            sb.append(i + 1).append(" ");
-        }
-
-        return sb.toString();
-    }
 }
