@@ -26,7 +26,7 @@ public class Launcher {
         for(int i=0; i<numberParty; i++){
             i++;
             System.out.println("Game " + i + " ____________________");
-            System.out.println(this.game);
+            System.out.println(this.game.getGrid());
             System.out.println();
 
             int currentPlayerIndex = 0;
@@ -37,7 +37,7 @@ public class Launcher {
                 Boolean goodAction = false;
                 while(!goodAction){
                     int action = players[currentPlayerIndex].decide();
-                    goodAction = this.game.playAction(this.players[currentPlayerIndex].getPlayerId(), action);
+                    goodAction = this.game.playAction(this.players[currentPlayerIndex], action);
                 }
                 currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
 

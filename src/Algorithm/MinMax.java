@@ -32,7 +32,7 @@ public class MinMax implements Algorithm {
         this.evaluation = 0;
 
         for (Integer action : actions) {
-            game.playAction(player.getPlayerId(), action);
+            game.playAction(player, action);
 
             if (maxNode) {  // MAX
                 score = this.minMax(game, this.players[1], this.dept);
@@ -74,7 +74,7 @@ public class MinMax implements Algorithm {
 
         for (Integer action : actions) {
 
-            game.playAction(player.getPlayerId(), action);
+            game.playAction(player, action);
             score = this.minMax(game, opponent, dept - 1);
             game.undoAction();
 
