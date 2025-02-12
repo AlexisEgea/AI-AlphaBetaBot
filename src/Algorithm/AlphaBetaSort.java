@@ -36,7 +36,7 @@ public class AlphaBetaSort implements Algorithm {
         this.evaluation = 0;
 
         for (Integer action : actions) {
-            game.playAction(player.getPlayerId(), action);
+            game.playAction(player, action);
 
             if (maxNode) {  // MAX
                 score = this.alphaBetaSort(game, this.players[1], this.dept, alpha, beta);
@@ -85,7 +85,7 @@ public class AlphaBetaSort implements Algorithm {
 
         for (Integer action : actions) {
 
-            game.playAction(player.getPlayerId(), action);
+            game.playAction(player, action);
             score = this.alphaBetaSort(game, opponent, dept - 1, alpha, beta);
             game.undoAction();
 

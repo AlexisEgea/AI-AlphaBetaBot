@@ -20,6 +20,11 @@ public class ConnectFour extends Game<int[][]> {
     }
 
     @Override
+    public int [][] getGrid() {
+        return this.grid;
+    }
+
+    @Override
     public void initGame(int columnSize, int lineSize) {
         this.columnSize = columnSize;
         this.lineSize = lineSize;
