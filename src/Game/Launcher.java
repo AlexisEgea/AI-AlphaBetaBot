@@ -1,6 +1,6 @@
-package game;
+package Game;
 
-import player.Player;
+import Player.Player;
 
 public class Launcher {
     private Game game;
@@ -39,7 +39,6 @@ public class Launcher {
                     int action = players[currentPlayerIndex].decide();
                     goodAction = this.game.playAction(this.players[currentPlayerIndex].getPlayerId(), action);
                 }
-                System.out.println(this.game);
                 currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
 
             }
