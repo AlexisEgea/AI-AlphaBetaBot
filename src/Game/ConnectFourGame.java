@@ -74,12 +74,14 @@ public class ConnectFourGame extends Game {
             end = this.searchFourPiece(player.getPlayerId());
             if (end) {
                 System.out.println("Player " + player.getPlayerId() + " win the game!");
+                this.winner = player.getPlayerId();
                 return true;
             }
         }
 
         if (this.drawGame()) {
             System.out.println("Grid FULL, nobody wins the game 0_0");
+            this.winner = 0; // If nobody win the game, the winner id is 0
             return true;
         }
 

@@ -7,8 +7,11 @@ import java.util.ArrayList;
 
 public abstract class Game {
     protected Grid grid;
+    protected int winner;
 
-    public Game(){}
+    public Game(){
+        this.winner = -1;
+    }
 
     public abstract void initGame(int columnSize, int lineSize);
 
@@ -27,4 +30,7 @@ public abstract class Game {
         return this.grid;
     }
 
+    public int getWinner() {
+        return winner;
+    }
 }
