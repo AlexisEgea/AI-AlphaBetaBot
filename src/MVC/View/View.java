@@ -29,23 +29,23 @@ public class View extends JFrame {
 		this.game = game;
 
 		// Setup the main window
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700, 700);
-		setLayout(new BorderLayout());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(700, 700);
+		this.setLayout(new BorderLayout());
 
-		getContentPane().setBackground(Color.RED);
+		this.getContentPane().setBackground(Color.RED);
 
 		// Panel for the game grid
-		gridPanel = new JPanel();
-		gridPanel.setLayout(new GridLayout(this.game.getGrid().getLineSize(), this.game.getGrid().getColumnSize()));
+		this.gridPanel = new JPanel();
+		this.gridPanel.setLayout(new GridLayout(this.game.getGrid().getLineSize(), this.game.getGrid().getColumnSize()));
 
 		// Creating the game grid
-		grid = new CirclePanel[this.game.getGrid().getColumnSize()][this.game.getGrid().getLineSize()];
+		this.grid = new CirclePanel[this.game.getGrid().getColumnSize()][this.game.getGrid().getLineSize()];
 		for (int line = 0; line < this.game.getGrid().getLineSize(); line++) {
 			for (int column = 0; column < this.game.getGrid().getColumnSize(); column++) {
 				CirclePanel cell = new CirclePanel(Color.WHITE);
-				grid[column][line] = cell;
-				gridPanel.add(cell);
+				this.grid[column][line] = cell;
+				this.gridPanel.add(cell);
 			}
 		}
 
@@ -53,32 +53,31 @@ public class View extends JFrame {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1, this.game.getGrid().getColumnSize()));
 
-		buttons = new JButton[this.game.getGrid().getColumnSize()];
-
+		this.buttons = new JButton[this.game.getGrid().getColumnSize()];
 		for (int i = 0; i < this.game.getGrid().getColumnSize(); i++) {
 			JButton button = new JButton(String.valueOf(i + 1));
 			button.setFont(new Font("Arial", Font.BOLD, 20));
 			button.setBackground(Color.LIGHT_GRAY);
-			buttons[i] = button;
+			this.buttons[i] = button;
 			buttonPanel.add(button);
 		}
 
-		currentPlayerLabel = new JLabel("Player 1's turn (RED)", SwingConstants.CENTER);
-		currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 20));
-		currentPlayerLabel.setForeground(Color.BLACK);
-		currentPlayerLabel.setBackground(Color.RED);
+		this.currentPlayerLabel = new JLabel("Player 1's turn (RED)", SwingConstants.CENTER);
+		this.currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		this.currentPlayerLabel.setForeground(Color.BLACK);
+		this.currentPlayerLabel.setBackground(Color.RED);
 
-		add(currentPlayerLabel, BorderLayout.NORTH);
-		add(buttonPanel, BorderLayout.SOUTH);
-		add(gridPanel, BorderLayout.CENTER);
+		this.add(currentPlayerLabel, BorderLayout.NORTH);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		this.add(gridPanel, BorderLayout.CENTER);
 
-		setVisible(true);
+		this.setVisible(true);
 	}
 
 	public void setController(Controller controller) {
 		this.controller = controller;
 		for (int i = 0; i < this.game.getGrid().getColumnSize(); i++) {
-			buttons[i].addActionListener(new PlayActionListener(controller));
+			this.buttons[i].addActionListener(new PlayActionListener(controller));
 		}
 	}
 
@@ -89,35 +88,38 @@ public class View extends JFrame {
 			}
 		}
 
-		if(this.controller.getGame().endGame(new Player[]{this.controller.getPlayer1(), this.controller.getPlayer2()}))
-			this.endGame("Game Over!");
-		else {
-			this.updateCurrentPlayer(this.controller.getCurrentPlayer().getPlayerId());
-			if(this.controller.getCurrentPlayer() instanceof HumanPlayer)
-				enablePlayerInput(true);
-			else
-				enablePlayerInput(false);
-		}
+		this.updateCurrentPlayer(this.controller.getCurrentPlayer().getPlayerId());
+		if(this.controller.getCurrentPlayer() instanceof HumanPlayer)
+			this.enablePlayerInput(true);
+		else
+			this.enablePlayerInput(false);
 	}
 
+	public void updateEndGame(){
+		int winner = this.controller.getGame().getWinner();
+		String message = "";
+		if(winner != 0)
+			message = "Player " + winner + " WIN !!!";
+		else
+			message = "Egality, Nobody Won";
+		this.endGame(winner, message);
+	}
 
 	public void changeGridColor(int x, int y, int color) {
 		switch (color) {
-			case RED -> grid[x][y].changeColor(Color.RED);
-			case YELLOW -> grid[x][y].changeColor(Color.YELLOW);
-			default -> grid[x][y].changeColor(Color.WHITE);
+			case RED -> this.grid[x][y].changeColor(Color.RED);
+			case YELLOW -> this.grid[x][y].changeColor(Color.YELLOW);
+			default -> this.grid[x][y].changeColor(Color.WHITE);
 		}
-		this.grid[x][y].revalidate();
-		this.grid[x][y].repaint();
 	}
 
 	public void updateCurrentPlayer(int playerId) {
 		if (playerId == RED) {
-			getContentPane().setBackground(Color.RED);
-			currentPlayerLabel.setText("Player 1's turn (RED)");
+			this.getContentPane().setBackground(Color.RED);
+			this.currentPlayerLabel.setText("Player 1's turn (RED)");
 		} else {
-			getContentPane().setBackground(Color.YELLOW);
-			currentPlayerLabel.setText("Player 2's turn (YELLOW)");
+			this.getContentPane().setBackground(Color.YELLOW);
+			this.currentPlayerLabel.setText("Player 2's turn (YELLOW)");
 		}
 	}
 
@@ -127,9 +129,15 @@ public class View extends JFrame {
 		}
 	}
 
-	public void endGame(String message) {
-		JOptionPane.showMessageDialog(this, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
-		dispose(); // Ferme la fenêtre
+	public void endGame(int playerId, String message) {
+		if (playerId == RED)
+			this.currentPlayerLabel.setText("Player 1 (RED) WIN !!!");
+		else
+			this.currentPlayerLabel.setText("Player 2 (YELLOW) WIN !!!");
+		this.getContentPane().setBackground(Color.GREEN);
+		this.enablePlayerInput(false);
+
+		JOptionPane.showMessageDialog(this, "End of the game. Thank you for taking the time to play :)", message, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private class CirclePanel extends JPanel {
@@ -137,13 +145,13 @@ public class View extends JFrame {
 
 		public CirclePanel(Color color) {
 			this.color = color;
-			setPreferredSize(new Dimension(80, 80));
-			setBackground(Color.BLUE);
+			this.setPreferredSize(new Dimension(80, 80));
+			this.setBackground(Color.BLUE);
 		}
 
 		public void changeColor(Color color) {
 			this.color = color;
-			repaint();
+			this.repaint();
 		}
 
 		@Override
