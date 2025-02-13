@@ -42,24 +42,36 @@ public class Controller {
         return currentPlayer;
     }
 
-    public void add_observer(View observer){
+    public void addObserver(View observer){
         this.observers.add(observer);
     }
 
-    public void remove_observer(View observer){
+    public void removeObserver(View observer){
         this.observers.remove(observer);
     }
 
-    public void notify_observers(){
+    public void notifyObservers(){
         for (View observer : this.observers) {
             observer.update();
         }
     }
 
+    public void notifyEndGame(){
+        for (View observer : this.observers) {
+            observer.updateEndGame();
+        }
+    }
+
     public void playAction(int column) {
         this.playHumanMove(column);
-
-        this.playBotMove();
+        if (this.game.endGame(new Player[]{this.player1, this.player2}))
+            this.notifyEndGame();
+        else{
+            this.playBotMove();
+            System.out.println("DEBUG: Yellow player has played.");
+            if (this.game.endGame(new Player[]{this.player1, this.player2}))
+                this.notifyEndGame();
+        }
     }
 
         public void playHumanMove(int column) {
@@ -67,10 +79,11 @@ public class Controller {
             boolean goodAction = game.playAction(currentPlayer, column);
             if (goodAction){
                 this.switchPlayer();
-                this.notify_observers();
+                this.notifyObservers();
 
             }
         }
+
     }
 
     public void playBotMove() {
@@ -79,9 +92,11 @@ public class Controller {
             boolean goodAction = game.playAction(currentPlayer, action);
             if (goodAction) {
                 this.switchPlayer();
-                this.notify_observers();
+                this.notifyObservers();
             }
         }
+        if (this.game.endGame(new Player[]{this.player1, this.player2}))
+            this.notifyEndGame();
     }
 
     private void switchPlayer() {

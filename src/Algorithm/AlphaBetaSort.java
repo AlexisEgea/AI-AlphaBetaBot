@@ -84,7 +84,7 @@ public class AlphaBetaSort implements Algorithm {
         bestScore = maxNode ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
         for (Integer action : actions) {
-
+            System.out.print("AlphaBetaSort Dept: " + dept + " - ");
             game.playAction(player, action);
             score = this.alphaBetaSort(game, opponent, dept - 1, alpha, beta);
             game.undoAction();
