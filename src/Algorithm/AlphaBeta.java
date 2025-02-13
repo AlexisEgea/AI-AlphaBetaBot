@@ -84,7 +84,7 @@ public class AlphaBeta implements Algorithm {
         bestScore = maxNode ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
         for (Integer action : actions) {
-
+            System.out.print("AlphaBeta Dept: " + dept + " - ");
             game.playAction(player, action);
             score = this.alphabeta(game, opponent, dept - 1, alpha, beta);
             game.undoAction();

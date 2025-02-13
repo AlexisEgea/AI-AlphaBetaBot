@@ -73,7 +73,7 @@ public class MinMax implements Algorithm {
         bestScore = maxNode ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
         for (Integer action : actions) {
-
+            System.out.print("MinMax Dept: " + dept + " - ");
             game.playAction(player, action);
             score = this.minMax(game, opponent, dept - 1);
             game.undoAction();
