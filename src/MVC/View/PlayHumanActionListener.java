@@ -5,11 +5,11 @@ import MVC.Controller.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayActionListener implements ActionListener {
+public class PlayHumanActionListener implements ActionListener {
 
     private final Controller controller;
 
-    public PlayActionListener(Controller controller) {
+    public PlayHumanActionListener(Controller controller) {
         this.controller = controller;
     }
 
