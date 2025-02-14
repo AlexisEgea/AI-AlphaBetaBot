@@ -96,7 +96,13 @@ public class View extends JFrame {
 		}
 
 
-
+		if(this.controller.getGame().getCurrentPlayer() instanceof HumanPlayer){
+			this.enablePlayerInput(true);
+			this.enableBotInput(false);
+		} else {
+			this.enablePlayerInput(false);
+			this.enableBotInput(true);
+		}
 
 		this.setVisible(true);
 	}
