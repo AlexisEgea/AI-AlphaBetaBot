@@ -14,12 +14,14 @@ public static void main(String[] args) {
     ConnectFourGame game = new ConnectFourGame();
 
     Player humanPlayer = new HumanPlayer(RED);
-//    Player randomBot = new RandomBot(YELLOW, game.getColumnSize());
+    Player randomBot = new RandomBot(YELLOW, game.getGrid().getColumnSize());
 //    Player minMaxBot = new MinMaxBot(YELLOW, humanPlayer, game);
 //    Player alphaBetaBot = new AlphaBetaBot(YELLOW, humanPlayer, game);
-    Player alphaBetaSortBot = new AlphaBetaSortBot(YELLOW, humanPlayer, game);
+//    Player alphaBetaSortBot = new AlphaBetaSortBot(YELLOW, humanPlayer, game);
 
-    Player[] players = {humanPlayer, alphaBetaSortBot};
-    Launcher launcher = new Launcher(players, game, 1);
+    Player[] players = {humanPlayer, randomBot};
+    game.initPlayer(players);
+
+    Launcher launcher = new Launcher(game, 2);
     launcher.startGame(true);
 }
