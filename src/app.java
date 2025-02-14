@@ -13,7 +13,7 @@ public class app {
         Player player1 = new HumanPlayer(RED);
 //         Player player2 = new HumanPlayer(YELLOW);
         Player player2 = new AlphaBetaSortBot(YELLOW, player1, game);
-        game.initPlayer(new Player[]{player2, player1});
+        game.initPlayer(new Player[]{player1, player2});
         Controller controller = new Controller(game);
         View view = new View(controller);
         controller.addObserver(view);
