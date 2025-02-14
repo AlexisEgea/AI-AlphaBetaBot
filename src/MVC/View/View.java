@@ -1,6 +1,5 @@
 package MVC.View;
 
-import Game.Game;
 import MVC.Controller.Controller;
 import Player.Player;
 import Player.HumanPlayer;
@@ -12,7 +11,6 @@ import java.awt.*;
 import static utils.Constant.*;
 
 public class View extends JFrame {
-	private Game game;
 
 	private CirclePanel[][] grid;
 	private JPanel gridPanel;
@@ -21,12 +19,14 @@ public class View extends JFrame {
 
 	private JButton[] buttons;
 
+	private JButton buttonBot;
+
 	private Controller controller;
 
 
-	public View(Game game) {
+	public View(Controller controller) {
 		super("Connect Four");
-		this.game = game;
+		this.controller = controller;
 
 		// Setup the main window
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,12 +37,12 @@ public class View extends JFrame {
 
 		// Panel for the game grid
 		this.gridPanel = new JPanel();
-		this.gridPanel.setLayout(new GridLayout(this.game.getGrid().getLineSize(), this.game.getGrid().getColumnSize()));
+		this.gridPanel.setLayout(new GridLayout(this.controller.getGame().getGrid().getLineSize(), this.controller.getGame().getGrid().getColumnSize()));
 
 		// Creating the game grid
-		this.grid = new CirclePanel[this.game.getGrid().getColumnSize()][this.game.getGrid().getLineSize()];
-		for (int line = 0; line < this.game.getGrid().getLineSize(); line++) {
-			for (int column = 0; column < this.game.getGrid().getColumnSize(); column++) {
+		this.grid = new CirclePanel[this.controller.getGame().getGrid().getColumnSize()][this.controller.getGame().getGrid().getLineSize()];
+		for (int line = 0; line < this.controller.getGame().getGrid().getLineSize(); line++) {
+			for (int column = 0; column < this.controller.getGame().getGrid().getColumnSize(); column++) {
 				CirclePanel cell = new CirclePanel(Color.WHITE);
 				this.grid[column][line] = cell;
 				this.gridPanel.add(cell);
@@ -51,14 +51,15 @@ public class View extends JFrame {
 
 		// Panel for the buttons
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(1, this.game.getGrid().getColumnSize()));
+		buttonPanel.setLayout(new GridLayout(1, this.controller.getGame().getGrid().getColumnSize()));
 
-		this.buttons = new JButton[this.game.getGrid().getColumnSize()];
-		for (int i = 0; i < this.game.getGrid().getColumnSize(); i++) {
+		this.buttons = new JButton[this.controller.getGame().getGrid().getColumnSize()];
+		for (int i = 0; i < this.controller.getGame().getGrid().getColumnSize(); i++) {
 			JButton button = new JButton(String.valueOf(i + 1));
 			button.setFont(new Font("Arial", Font.BOLD, 20));
 			button.setBackground(Color.LIGHT_GRAY);
 			this.buttons[i] = button;
+			this.buttons[i].addActionListener(new PlayHumanActionListener(this.controller));
 			buttonPanel.add(button);
 		}
 
@@ -71,14 +72,39 @@ public class View extends JFrame {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.add(gridPanel, BorderLayout.CENTER);
 
-		this.setVisible(true);
-	}
+		if (!(this.controller.getGame().getPlayers().getFirst() instanceof HumanPlayer)
+				|| !(this.controller.getGame().getPlayers().getLast() instanceof HumanPlayer)) {
 
-	public void setController(Controller controller) {
-		this.controller = controller;
-		for (int i = 0; i < this.game.getGrid().getColumnSize(); i++) {
-			this.buttons[i].addActionListener(new PlayActionListener(controller));
+			this.buttonBot = new JButton("Bot Play");
+			this.buttonBot.setFont(new Font("Arial", Font.BOLD, 20));
+			this.buttonBot.setBackground(Color.LIGHT_GRAY);
+			this.buttonBot.addActionListener(new PlayBotActionListener(this.controller));
+
+
+			// Panel pour le bouton Bot (ligne séparée)
+			JPanel buttonBotPanel = new JPanel();
+			buttonBotPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			buttonBotPanel.add(this.buttonBot);
+
+			// Panel pour regrouper les deux ensembles de boutons
+			JPanel controlPanel = new JPanel();
+			controlPanel.setLayout(new BorderLayout());
+			controlPanel.add(buttonPanel, BorderLayout.NORTH);  // Les boutons de jeu en haut
+			controlPanel.add(buttonBotPanel, BorderLayout.SOUTH); // Bouton Bot en dessous
+
+			this.add(controlPanel, BorderLayout.SOUTH); // Remplace buttonPanel par le panel combiné
 		}
+
+
+		if(this.controller.getGame().getCurrentPlayer() instanceof HumanPlayer){
+			this.enablePlayerInput(true);
+			this.enableBotInput(false);
+		} else {
+			this.enablePlayerInput(false);
+			this.enableBotInput(true);
+		}
+
+		this.setVisible(true);
 	}
 
 	public void update(){
@@ -88,22 +114,29 @@ public class View extends JFrame {
 			}
 		}
 
-		this.updateCurrentPlayer(this.controller.getCurrentPlayer().getPlayerId());
-		if(this.controller.getCurrentPlayer() instanceof HumanPlayer)
+		this.updateCurrentPlayer(this.controller.getGame().getCurrentPlayer().getPlayerId());
+		if(this.controller.getGame().getCurrentPlayer() instanceof HumanPlayer){
 			this.enablePlayerInput(true);
-		else
+			this.enableBotInput(false);
+		}
+		else {
 			this.enablePlayerInput(false);
+			this.enableBotInput(true);
+
+		}
 	}
 
 	public void updateEndGame(){
-		int winner = this.controller.getGame().getWinner();
+		Player winner = this.controller.getGame().getWinner();
 		String message = "";
-		if(winner != 0)
-			message = "Player " + winner + " WIN !!!";
-		else
+		if(winner != null){
+			message = "Player " + winner.getPlayerId() + " WIN !!!";
+			this.endGame(winner.getPlayerId(), message);
+		} else {
 			message = "Egality, Nobody Won";
-		this.endGame(winner, message);
-	}
+			this.endGame(0, message);
+		}
+    }
 
 	public void changeGridColor(int x, int y, int color) {
 		switch (color) {
@@ -124,16 +157,21 @@ public class View extends JFrame {
 	}
 
 	public void enablePlayerInput(boolean enable) {
-		for (JButton button : buttons) {
+		for (JButton button : this.buttons)
 			button.setEnabled(enable);
-		}
+	}
+
+	public void enableBotInput(boolean enable) {
+		this.buttonBot.setEnabled(enable);
 	}
 
 	public void endGame(int playerId, String message) {
-		if (playerId == RED)
+		if(playerId == RED)
 			this.currentPlayerLabel.setText("Player 1 (RED) WIN !!!");
-		else
+		if(playerId == YELLOW)
 			this.currentPlayerLabel.setText("Player 2 (YELLOW) WIN !!!");
+		else
+			this.currentPlayerLabel.setText("Nobody won this game");
 		this.getContentPane().setBackground(Color.GREEN);
 		this.enablePlayerInput(false);
 

@@ -16,7 +16,7 @@ public class AlphaBetaSort implements Algorithm {
         this.players = new Player[2];
         this.players[0] = playerOne;
         this.players[1] = playerTwo;
-        this.dept = 10;
+        this.dept = 5;
 
     }
     @Override
@@ -73,7 +73,7 @@ public class AlphaBetaSort implements Algorithm {
 
         Player opponent;
 
-        if (dept == 0 || game.endGame(this.players)) {
+        if (dept == 0 || game.endGame()) {
             evaluation++;
             return Evaluation.eval(game, this.players[0]);
         }

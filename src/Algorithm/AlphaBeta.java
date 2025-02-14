@@ -73,7 +73,7 @@ public class AlphaBeta implements Algorithm {
 
         Player opponent;
 
-        if (dept == 0 || game.endGame(this.players)) {
+        if (dept == 0 || game.endGame()) {
             evaluation++;
             return Evaluation.eval(game, this.players[0]);
         }

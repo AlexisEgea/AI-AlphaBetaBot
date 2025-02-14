@@ -3,6 +3,8 @@ package Game;
 import Grid.ConnectFourGrid;
 
 import Player.Player;
+
+import java.util.Arrays;
 import java.util.Stack;
 import java.util.ArrayList;
 
@@ -24,6 +26,35 @@ public class ConnectFourGame extends Game {
     }
 
     @Override
+    public void initPlayer(Player [] players){
+        this.players = new ArrayList<>();
+        this.players.addAll(Arrays.asList(players));
+        this.currentPlayer = this.players.getFirst();
+    }
+
+    @Override
+    public void resetGame() {
+        this.initGame(this.grid.getColumnSize(), this.grid.getLineSize());
+        Player [] players = new Player[this.players.size()];
+        players[0] = this.players.getLast();
+        players[1] = this.players.getFirst();
+        players[0].setPlayerId(RED);
+        players[1].setPlayerId(YELLOW);
+        this.initPlayer(players);
+        this.winner = null;
+    }
+
+    @Override
+    public void switchCurrentPlayer(){
+        int currentPlayerId = (this.currentPlayer.getPlayerId() + 1) % this.players.size();
+        if(currentPlayerId == this.players.get(0).getPlayerId())
+            currentPlayer = this.players.get(0);
+        else
+            currentPlayer = this.players.get(1);
+    }
+
+
+    @Override
     public Boolean playAction(Player player, int action){
         action--;
         if (action >= 0 && action < this.grid.getColumnSize()) {
@@ -38,6 +69,8 @@ public class ConnectFourGame extends Game {
                     moveHistory.push(new int[]{action, line});
                     System.out.println("Player ID " + player.getPlayerId() + " Action: " + action);
                     System.out.println(this.getGrid());
+                    System.out.println("DEBUG: Action: " + action);
+                    System.out.println("A TOI DE JOUER");
 
                     return true;
                 }
@@ -68,20 +101,20 @@ public class ConnectFourGame extends Game {
     }
 
     @Override
-    public Boolean endGame(Player[] players) {
+    public Boolean endGame() {
         Boolean end;
-        for(Player player : players) {
+        for(Player player : this.players) {
             end = this.searchFourPiece(player.getPlayerId());
             if (end) {
                 System.out.println("Player " + player.getPlayerId() + " win the game!");
-                this.winner = player.getPlayerId();
+                this.winner = player;
                 return true;
             }
         }
 
         if (this.drawGame()) {
             System.out.println("Grid FULL, nobody wins the game 0_0");
-            this.winner = 0; // If nobody win the game, the winner id is 0
+            this.winner = null; // If nobody win the game, the winner id is 0
             return true;
         }
 

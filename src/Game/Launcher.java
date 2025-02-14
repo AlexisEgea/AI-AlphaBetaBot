@@ -4,44 +4,34 @@ import Player.Player;
 
 public class Launcher {
     private Game game;
-    private Player[] players;
     private int numberParty;
 
-    public Launcher(Player [] players, Game game, int numberParty){
-        this.players = players;
+    public Launcher(Game game, int numberParty){
         this.game = game;
         this.numberParty = numberParty;
-        this.initPlayerColor();
-    }
-
-    private void initPlayerColor(){
-        int color = 1;
-        for(int i=0; i<players.length; i++){
-            players[i].setPlayerId(color);
-            color++;
-        }
     }
 
     public void startGame(Boolean debug){
-        for(int i=0; i<numberParty; i++){
-            i++;
-            System.out.println("Game " + i + " ____________________");
+        int party = 0;
+        for(int i=0; i<this.numberParty; i++){
+            party = i+1;
+            System.out.println("Game " + party + " ____________________");
             System.out.println(this.game.getGrid());
             System.out.println();
 
-            int currentPlayerIndex = 0;
-            while(!this.game.endGame(players)){
+            while(!this.game.endGame()){
 
-                System.out.println("Player " + this.players[currentPlayerIndex].getPlayerId());
+                System.out.println("Player " + this.game.getCurrentPlayer().getPlayerId());
 
                 Boolean goodAction = false;
                 while(!goodAction){
-                    int action = players[currentPlayerIndex].decide();
-                    goodAction = this.game.playAction(this.players[currentPlayerIndex], action);
+                    int action = this.game.getCurrentPlayer().decide();
+                    goodAction = this.game.playAction(this.game.getCurrentPlayer(), action);
                 }
-                currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
-
+                this.game.switchCurrentPlayer();
             }
+
+            this.game.resetGame();
         }
     }
 }

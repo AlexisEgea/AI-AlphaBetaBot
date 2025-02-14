@@ -11,11 +11,11 @@ public class app {
     public static void main(String[] args) {
         ConnectFourGame game = new ConnectFourGame();
         Player player1 = new HumanPlayer(RED);
-        // Player player2 = new HumanPlayer(YELLOW);
+//         Player player2 = new HumanPlayer(YELLOW);
         Player player2 = new AlphaBetaSortBot(YELLOW, player1, game);
-        View view = new View(game);
-        Controller controller = new Controller(game, player1, player2);
-        controller.add_observer(view);
-        view.setController(controller);
+        game.initPlayer(new Player[]{player1, player2});
+        Controller controller = new Controller(game);
+        View view = new View(controller);
+        controller.addObserver(view);
     }
 }
