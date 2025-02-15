@@ -1,11 +1,9 @@
 package utils;
 
-
 import Game.Game;
 import Player.Player;
 
 import static utils.Constant.EMPTY;
-
 
 public class Evaluation {
     public static int eval(Game game, Player player) {
@@ -34,9 +32,7 @@ public class Evaluation {
         int[][][] dir = { { { 1, 0 }, { 1, 1 }, { 0, 1 }, { 1, -1 } }, // To the right
                 { { -1, 0 }, { -1, -1 }, { 0, -1 }, { -1, 1 } } // To the left
         };
-
         int playerCell = game.getGrid().getCell(column, line);
-
         int x, y, directionScore, totalScore = 0, distance = 1;
 
         // For the 4 directions
@@ -54,9 +50,7 @@ public class Evaluation {
                     }
                     if (game.getGrid().getCell(x, y) != EMPTY && game.getGrid().getCell(x, y) == playerCell)
                         directionScore++;
-
                     distance++;
-
                     x += dir[s][d][0];
                     y += dir[s][d][1];
                 }
@@ -64,7 +58,6 @@ public class Evaluation {
                     totalScore += 10000;
                 else if (distance > 3)
                     totalScore += directionScore;
-
             }
         }
         return totalScore;
