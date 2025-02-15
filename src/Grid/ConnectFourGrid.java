@@ -3,13 +3,13 @@ package Grid;
 import static utils.Constant.*;
 
 public class ConnectFourGrid extends Grid<int[][]> {
-
     public ConnectFourGrid(int columnSize, int lineSize){
         super();
         this.columnSize = columnSize;
         this.lineSize = lineSize;
         this.initGrid(this.columnSize, this.lineSize);
     }
+
     @Override
     public void initGrid(int columnSize, int lineSize) {
         this.columnSize = columnSize;
@@ -71,7 +71,6 @@ public class ConnectFourGrid extends Grid<int[][]> {
         for (int i = 0; i < columnSize; i++) {
             sb.append(i + 1).append(" ");
         }
-
         return sb.toString();
     }
 

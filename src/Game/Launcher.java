@@ -1,7 +1,5 @@
 package Game;
 
-import Player.Player;
-
 public class Launcher {
     private Game game;
     private int numberParty;
@@ -20,7 +18,6 @@ public class Launcher {
             System.out.println();
 
             while(!this.game.endGame()){
-
                 System.out.println("Player " + this.game.getCurrentPlayer().getPlayerId());
 
                 Boolean goodAction = false;
@@ -30,7 +27,6 @@ public class Launcher {
                 }
                 this.game.switchCurrentPlayer();
             }
-
             this.game.resetGame();
         }
     }

@@ -12,7 +12,6 @@ public abstract class Game {
     protected Player currentPlayer;
     protected Player winner;
 
-
     public Game(){
         this.players = new ArrayList<>();
         this.currentPlayer = null;

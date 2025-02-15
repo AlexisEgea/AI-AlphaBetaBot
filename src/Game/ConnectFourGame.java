@@ -53,7 +53,6 @@ public class ConnectFourGame extends Game {
             currentPlayer = this.players.get(1);
     }
 
-
     @Override
     public Boolean playAction(Player player, int action){
         action--;
@@ -69,9 +68,6 @@ public class ConnectFourGame extends Game {
                     moveHistory.push(new int[]{action, line});
                     System.out.println("Player ID " + player.getPlayerId() + " Action: " + action);
                     System.out.println(this.getGrid());
-                    System.out.println("DEBUG: Action: " + action);
-                    System.out.println("A TOI DE JOUER");
-
                     return true;
                 }
             }
@@ -87,6 +83,11 @@ public class ConnectFourGame extends Game {
     public void undoAction() {
         int[] lastMove = moveHistory.pop();
         this.grid.setCell(lastMove[0], lastMove[1], EMPTY);
+    }
+
+    public int[] getLastMove() {
+        System.out.println(Arrays.toString(this.moveHistory.peek()));
+        return this.moveHistory.peek();
     }
 
     @Override
@@ -117,7 +118,6 @@ public class ConnectFourGame extends Game {
             this.winner = null; // If nobody win the game, the winner id is 0
             return true;
         }
-
         return false;
     }
 
@@ -143,13 +143,11 @@ public class ConnectFourGame extends Game {
             int newX = x + i * dx;
             int newY = y + i * dy;
 
-            if (newX < 0 || newX >= this.grid.getColumnSize() || newY < 0 || newY >= this.grid.getLineSize()) {
+            if (newX < 0 || newX >= this.grid.getColumnSize() || newY < 0 || newY >= this.grid.getLineSize())
                 return false;
-            }
 
-            if (this.grid.getCell(newX, newY) != playerId) {
+            if (this.grid.getCell(newX, newY) != playerId)
                 return false;
-            }
         }
         return true;
     }
@@ -158,6 +156,4 @@ public class ConnectFourGame extends Game {
     public Boolean drawGame(){
         return ((ConnectFourGrid) this.grid).isGridFull();
     }
-
-
 }
