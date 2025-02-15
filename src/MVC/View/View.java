@@ -1,5 +1,6 @@
 package MVC.View;
 
+import Game.ConnectFourGame;
 import MVC.Controller.Controller;
 import Player.Player;
 import Player.HumanPlayer;
@@ -7,22 +8,16 @@ import Player.HumanPlayer;
 import javax.swing.*;
 import java.awt.*;
 
-
 import static utils.Constant.*;
 
 public class View extends JFrame {
-
 	private CirclePanel[][] grid;
 	private JPanel gridPanel;
-
 	private JLabel currentPlayerLabel;
-
 	private JButton[] buttons;
-
 	private JButton buttonBot;
 
 	private Controller controller;
-
 
 	public View(Controller controller) {
 		super("Connect Four");
@@ -49,10 +44,9 @@ public class View extends JFrame {
 			}
 		}
 
-		// Panel for the buttons
+		// Panel for buttons representing actions to click
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1, this.controller.getGame().getGrid().getColumnSize()));
-
 		this.buttons = new JButton[this.controller.getGame().getGrid().getColumnSize()];
 		for (int i = 0; i < this.controller.getGame().getGrid().getColumnSize(); i++) {
 			JButton button = new JButton(String.valueOf(i + 1));
@@ -63,56 +57,58 @@ public class View extends JFrame {
 			buttonPanel.add(button);
 		}
 
+		// Row to specify which player have to play
 		this.currentPlayerLabel = new JLabel("Player 1's turn (RED)", SwingConstants.CENTER);
 		this.currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		this.currentPlayerLabel.setForeground(Color.BLACK);
 		this.currentPlayerLabel.setBackground(Color.RED);
 
-		this.add(currentPlayerLabel, BorderLayout.NORTH);
-		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.add(gridPanel, BorderLayout.CENTER);
 
+		// If one player is a bot, a button for the bot is added to perform an action for that player
 		if (!(this.controller.getGame().getPlayers().getFirst() instanceof HumanPlayer)
 				|| !(this.controller.getGame().getPlayers().getLast() instanceof HumanPlayer)) {
-
 			this.buttonBot = new JButton("Bot Play");
 			this.buttonBot.setFont(new Font("Arial", Font.BOLD, 20));
 			this.buttonBot.setBackground(Color.LIGHT_GRAY);
 			this.buttonBot.addActionListener(new PlayBotActionListener(this.controller));
 
-
-			// Panel pour le bouton Bot (ligne séparée)
 			JPanel buttonBotPanel = new JPanel();
 			buttonBotPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 			buttonBotPanel.add(this.buttonBot);
 
-			// Panel pour regrouper les deux ensembles de boutons
 			JPanel controlPanel = new JPanel();
 			controlPanel.setLayout(new BorderLayout());
-			controlPanel.add(buttonPanel, BorderLayout.NORTH);  // Les boutons de jeu en haut
-			controlPanel.add(buttonBotPanel, BorderLayout.SOUTH); // Bouton Bot en dessous
+			controlPanel.add(buttonPanel, BorderLayout.NORTH);
+			controlPanel.add(buttonBotPanel, BorderLayout.SOUTH);
 
-			this.add(controlPanel, BorderLayout.SOUTH); // Remplace buttonPanel par le panel combiné
-		}
+			this.add(controlPanel, BorderLayout.SOUTH);
 
-
-		if(this.controller.getGame().getCurrentPlayer() instanceof HumanPlayer){
-			this.enablePlayerInput(true);
-			this.enableBotInput(false);
+			if(this.controller.getGame().getCurrentPlayer() instanceof HumanPlayer){
+				this.enablePlayerInput(true);
+				this.enableBotInput(false);
+			} else {
+				this.enablePlayerInput(false);
+				this.enableBotInput(true);
+			}
 		} else {
-			this.enablePlayerInput(false);
-			this.enableBotInput(true);
+			this.add(buttonPanel, BorderLayout.SOUTH);
 		}
+
+		this.add(currentPlayerLabel, BorderLayout.NORTH);
+		this.add(gridPanel, BorderLayout.CENTER);
 
 		this.setVisible(true);
 	}
 
 	public void update(){
+		int [] test = ((ConnectFourGame) this.controller.getGame()).getLastMove();
 		for (int x = 0; x < this.controller.getGame().getGrid().getColumnSize(); x++) {
 			for (int y = 0; y < this.controller.getGame().getGrid().getLineSize(); y++) {
 				this.changeGridColor(x, y, this.controller.getGame().getGrid().getCell(x, y));
 			}
 		}
+		// Add a highlighted to recognize easily the last played action
+		this.changeGridColorWitHighlighted(test[0], test[1], this.controller.getGame().getGrid().getCell(test[0], test[1]));
 
 		this.updateCurrentPlayer(this.controller.getGame().getCurrentPlayer().getPlayerId());
 		if(this.controller.getGame().getCurrentPlayer() instanceof HumanPlayer){
@@ -122,7 +118,6 @@ public class View extends JFrame {
 		else {
 			this.enablePlayerInput(false);
 			this.enableBotInput(true);
-
 		}
 	}
 
@@ -146,6 +141,14 @@ public class View extends JFrame {
 		}
 	}
 
+	public void changeGridColorWitHighlighted(int x, int y, int color) {
+		switch (color) {
+			case RED -> this.grid[x][y].changeColor(Color.RED, true);
+			case YELLOW -> this.grid[x][y].changeColor(Color.YELLOW, true);
+			default -> this.grid[x][y].changeColor(Color.WHITE, true);
+		}
+	}
+
 	public void updateCurrentPlayer(int playerId) {
 		if (playerId == RED) {
 			this.getContentPane().setBackground(Color.RED);
@@ -162,7 +165,8 @@ public class View extends JFrame {
 	}
 
 	public void enableBotInput(boolean enable) {
-		this.buttonBot.setEnabled(enable);
+		if(this.buttonBot != null)
+			this.buttonBot.setEnabled(enable);
 	}
 
 	public void endGame(int playerId, String message) {
@@ -178,27 +182,45 @@ public class View extends JFrame {
 		JOptionPane.showMessageDialog(this, "End of the game. Thank you for taking the time to play :)", message, JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	private class CirclePanel extends JPanel {
+	public class CirclePanel extends JPanel {
 		private Color color;
+		private boolean highlighted;
 
 		public CirclePanel(Color color) {
 			this.color = color;
+			this.highlighted = false;
 			this.setPreferredSize(new Dimension(80, 80));
 			this.setBackground(Color.BLUE);
 		}
 
 		public void changeColor(Color color) {
 			this.color = color;
+			this.highlighted = false;
+			this.repaint();
+		}
+
+		public void changeColor(Color color, Boolean highlighted) {
+			this.color = color;
+			this.highlighted = highlighted;
 			this.repaint();
 		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
+
 			g.setColor(color);
 			int size = Math.min(getWidth(), getHeight()) - 10;
 			g.fillOval(5, 5, size, size);
+
+			if (highlighted) {
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setColor(Color.GREEN);
+				g2.setStroke(new BasicStroke(3));
+				g2.drawOval(5, 5, size, size);
+			}
 		}
 	}
+
 }
 
