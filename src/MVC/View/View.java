@@ -59,7 +59,7 @@ public class View extends JFrame {
 		}
 
 		// Row to specify which player have to play
-		this.currentPlayerLabel = new JLabel("MVC.Model.Player 1's turn (RED)", SwingConstants.CENTER);
+		this.currentPlayerLabel = new JLabel("Player 1's turn (RED)", SwingConstants.CENTER);
 		this.currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		this.currentPlayerLabel.setForeground(Color.BLACK);
 		this.currentPlayerLabel.setBackground(Color.RED);
@@ -179,10 +179,10 @@ public class View extends JFrame {
 	public void updateCurrentPlayer(int playerId) {
 		if (playerId == RED) {
 			this.getContentPane().setBackground(Color.RED);
-			this.currentPlayerLabel.setText("MVC.Model.Player 1's turn (RED)");
+			this.currentPlayerLabel.setText("Player 1's turn (RED)");
 		} else {
 			this.getContentPane().setBackground(Color.YELLOW);
-			this.currentPlayerLabel.setText("MVC.Model.Player 2's turn (YELLOW)");
+			this.currentPlayerLabel.setText("Player 2's turn (YELLOW)");
 		}
 	}
 
