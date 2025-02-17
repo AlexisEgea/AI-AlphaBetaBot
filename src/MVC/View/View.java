@@ -2,6 +2,7 @@ package MVC.View;
 
 import Game.ConnectFourGame;
 import MVC.Controller.Controller;
+import MVC.View.Panel.CirclePanel;
 import Player.Player;
 import Player.HumanPlayer;
 
@@ -63,7 +64,6 @@ public class View extends JFrame {
 		this.currentPlayerLabel.setForeground(Color.BLACK);
 		this.currentPlayerLabel.setBackground(Color.RED);
 
-
 		// If one player is a bot, a button for the bot is added to perform an action for that player
 		if (!(this.controller.getGame().getPlayers().getFirst() instanceof HumanPlayer)
 				|| !(this.controller.getGame().getPlayers().getLast() instanceof HumanPlayer)) {
@@ -100,8 +100,12 @@ public class View extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Updates the game grid and current player display after each action.
+	 * This method is triggered after each action to refresh the user interface.
+	 */
 	public void update(){
-		int [] test = ((ConnectFourGame) this.controller.getGame()).getLastMove();
+		int [] test = ((ConnectFourGame) this.controller.getGame()).getLastAction();
 		for (int x = 0; x < this.controller.getGame().getGrid().getColumnSize(); x++) {
 			for (int y = 0; y < this.controller.getGame().getGrid().getLineSize(); y++) {
 				this.changeGridColor(x, y, this.controller.getGame().getGrid().getCell(x, y));
@@ -121,6 +125,10 @@ public class View extends JFrame {
 		}
 	}
 
+	/**
+	 * Updates the game view to show the final result after the game has ended.
+	 * Displays the winner (if any) or a message for a draw.
+	 */
 	public void updateEndGame(){
 		Player winner = this.controller.getGame().getWinner();
 		String message = "";
@@ -133,6 +141,13 @@ public class View extends JFrame {
 		}
     }
 
+	/**
+	 * Changes the color of a specific grid cell based on the player's action.
+	 *
+	 * @param x The x-coordinate (column) of the cell.
+	 * @param y The y-coordinate (row) of the cell.
+	 * @param color The color associated with the player's piece.
+	 */
 	public void changeGridColor(int x, int y, int color) {
 		switch (color) {
 			case RED -> this.grid[x][y].changeColor(Color.RED);
@@ -141,6 +156,13 @@ public class View extends JFrame {
 		}
 	}
 
+	/**
+	 * Changes the color of a grid cell and highlights it for the last played action.
+	 *
+	 * @param x The x-coordinate (column) of the cell.
+	 * @param y The y-coordinate (row) of the cell.
+	 * @param color The color to apply to the cell.
+	 */
 	public void changeGridColorWitHighlighted(int x, int y, int color) {
 		switch (color) {
 			case RED -> this.grid[x][y].changeColor(Color.RED, true);
@@ -149,6 +171,11 @@ public class View extends JFrame {
 		}
 	}
 
+	/**
+	 * Updates the label displaying the current player's turn based on the player ID.
+	 *
+	 * @param playerId The ID of the current player (RED or YELLOW).
+	 */
 	public void updateCurrentPlayer(int playerId) {
 		if (playerId == RED) {
 			this.getContentPane().setBackground(Color.RED);
@@ -159,16 +186,32 @@ public class View extends JFrame {
 		}
 	}
 
+	/**
+	 * Enables or disables input for the player based on the current state of the game.
+	 *
+	 * @param enable Whether to enable (true) or disable (false) the player input buttons.
+	 */
 	public void enablePlayerInput(boolean enable) {
 		for (JButton button : this.buttons)
 			button.setEnabled(enable);
 	}
 
+	/**
+	 * Enables or disables input for the bot based on the current state of the game.
+	 *
+	 * @param enable Whether to enable (true) or disable (false) the bot input button.
+	 */
 	public void enableBotInput(boolean enable) {
 		if(this.buttonBot != null)
 			this.buttonBot.setEnabled(enable);
 	}
 
+	/**
+	 * Displays the final result, and prevents further player actions.
+	 *
+	 * @param playerId The ID of the winning player (0 if no winner).
+	 * @param message The message to display in the end-of-game dialog box.
+	 */
 	public void endGame(int playerId, String message) {
 		if(playerId == RED)
 			this.currentPlayerLabel.setText("Player 1 (RED) WIN !!!");
@@ -181,46 +224,5 @@ public class View extends JFrame {
 
 		JOptionPane.showMessageDialog(this, "End of the game. Thank you for taking the time to play :)", message, JOptionPane.INFORMATION_MESSAGE);
 	}
-
-	public class CirclePanel extends JPanel {
-		private Color color;
-		private boolean highlighted;
-
-		public CirclePanel(Color color) {
-			this.color = color;
-			this.highlighted = false;
-			this.setPreferredSize(new Dimension(80, 80));
-			this.setBackground(Color.BLUE);
-		}
-
-		public void changeColor(Color color) {
-			this.color = color;
-			this.highlighted = false;
-			this.repaint();
-		}
-
-		public void changeColor(Color color, Boolean highlighted) {
-			this.color = color;
-			this.highlighted = highlighted;
-			this.repaint();
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-
-			g.setColor(color);
-			int size = Math.min(getWidth(), getHeight()) - 10;
-			g.fillOval(5, 5, size, size);
-
-			if (highlighted) {
-				Graphics2D g2 = (Graphics2D) g;
-				g2.setColor(Color.GREEN);
-				g2.setStroke(new BasicStroke(3));
-				g2.drawOval(5, 5, size, size);
-			}
-		}
-	}
-
 }
 
