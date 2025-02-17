@@ -16,7 +16,7 @@ public class PlayHumanActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (controller != null) {
-            controller.playHumanMove(Integer.parseInt(e.getActionCommand()));
+            controller.playHumanAction(Integer.parseInt(e.getActionCommand()));
         }
     }
 }

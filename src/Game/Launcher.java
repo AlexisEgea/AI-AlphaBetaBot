@@ -9,8 +9,13 @@ public class Launcher {
         this.numberParty = numberParty;
     }
 
-    public void startGame(Boolean debug){
-        int party = 0;
+    /**
+     * Starts and runs the game for the specified number of parties.
+     * For each game, players take turns playing until the game ends.
+     * The game is reset after each party.
+     */
+    public void startGame(){
+        int party;
         for(int i=0; i<this.numberParty; i++){
             party = i+1;
             System.out.println("Game " + party + " ____________________");

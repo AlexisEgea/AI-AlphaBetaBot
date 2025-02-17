@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static utils.Constant.*;
 
 public class ConnectFourGame extends Game {
-    private Stack<int[]> moveHistory; // Stack to store move history
+    private Stack<int[]> actionHistory; // Stack to store action history
 
     public ConnectFourGame() {
         super();
@@ -22,7 +22,7 @@ public class ConnectFourGame extends Game {
     public void initGame(int columnSize, int lineSize) {
          this.grid = new ConnectFourGrid(columnSize, lineSize);
          this.grid.initGrid(this.grid.getColumnSize(), this.grid.getLineSize());
-         this.moveHistory = new Stack<>();
+         this.actionHistory = new Stack<>();
     }
 
     @Override
@@ -32,6 +32,9 @@ public class ConnectFourGame extends Game {
         this.currentPlayer = this.players.getFirst();
     }
 
+    /**
+     * Re-initializes the grid and players, and alternates the player turn order.
+     */
     @Override
     public void resetGame() {
         this.initGame(this.grid.getColumnSize(), this.grid.getLineSize());
@@ -61,11 +64,10 @@ public class ConnectFourGame extends Game {
                 System.out.println("Error Size Column: Column " + action + " is full");
                 return false;
             }
-
             for (int line = this.grid.getLineSize() - 1; line >= 0; line--) {
                 if (this.grid.getCell(action, line) == EMPTY) {
                     this.grid.setCell(action, line, player.getPlayerId());
-                    moveHistory.push(new int[]{action, line});
+                    actionHistory.push(new int[]{action, line});
                     System.out.println("Player ID " + player.getPlayerId() + " Action: " + action);
                     System.out.println(this.getGrid());
                     return true;
@@ -81,24 +83,28 @@ public class ConnectFourGame extends Game {
 
     @Override
     public void undoAction() {
-        int[] lastMove = moveHistory.pop();
-        this.grid.setCell(lastMove[0], lastMove[1], EMPTY);
-    }
-
-    public int[] getLastMove() {
-        System.out.println(Arrays.toString(this.moveHistory.peek()));
-        return this.moveHistory.peek();
+        int[] lastAction = actionHistory.pop();
+        this.grid.setCell(lastAction[0], lastAction[1], EMPTY);
     }
 
     @Override
-    public ArrayList<Integer> getPossibleMoves() {
-        ArrayList<Integer> possibleMoves = new ArrayList<>();
+    public ArrayList<Integer> getPossibleActions() {
+        ArrayList<Integer> possibleActions = new ArrayList<>();
         for (int column = 0; column < this.grid.getColumnSize(); column++) {
             if (!((ConnectFourGrid) this.grid).isColumnFull(column)) {
-                possibleMoves.add(column + 1);
+                possibleActions.add(column + 1);
             }
         }
-        return possibleMoves;
+        return possibleActions;
+    }
+
+    /**
+     * Retrieves the last action made.
+     *
+     * @return An array containing the column and row of the last action
+     */
+    public int[] getLastAction() {
+        return this.actionHistory.peek();
     }
 
     @Override
@@ -121,6 +127,13 @@ public class ConnectFourGame extends Game {
         return false;
     }
 
+    /**
+     * Searches the grid for a sequence of four consecutive pieces from the given player.
+     * The search checks all four possible directions (horizontal, vertical, and both diagonals).
+     *
+     * @param playerId The ID of the player to check for a winning sequence
+     * @return True if the player has four consecutive pieces; False otherwise
+     */
     public Boolean searchFourPiece(int playerId) {
         for (int x = 0; x < this.grid.getColumnSize(); x++) {
             for (int y = 0; y < this.grid.getLineSize(); y++) {
@@ -138,6 +151,17 @@ public class ConnectFourGame extends Game {
         return false;
     }
 
+    /**
+     * Checks a specific direction from the given (x, y) position for a sequence of four pieces
+     * of the same player.
+     *
+     * @param x        The starting x-coordinate
+     * @param y        The starting y-coordinate
+     * @param dx       The direction of the action in the x-axis (horizontal)
+     * @param dy       The direction of the action in the y-axis (vertical)
+     * @param playerId The ID of the player to check
+     * @return True if there are four consecutive pieces in the given direction; False otherwise
+     */
     private Boolean checkDirection(int x, int y, int dx, int dy, int playerId) {
         for (int i = 0; i < 4; i++) {
             int newX = x + i * dx;

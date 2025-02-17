@@ -16,7 +16,7 @@ public class PlayBotActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (controller != null) {
-            controller.playBotMove();
+            controller.playBotAction();
         }
     }
 }
