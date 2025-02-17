@@ -1,7 +1,7 @@
-package Algorithm;
+package MVC.Model.Algorithm;
 
-import Game.Game;
-import Player.Player;
+import MVC.Model.Game.Game;
+import MVC.Model.Player.Player;
 
 public interface Algorithm {
     /**

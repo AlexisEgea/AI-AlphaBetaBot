@@ -1,6 +1,4 @@
-package Grid;
-
-import static utils.Constant.EMPTY;
+package MVC.Model.Grid;
 
 public abstract class Grid<T>{
     protected int columnSize;

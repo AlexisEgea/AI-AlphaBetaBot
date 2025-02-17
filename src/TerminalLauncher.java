@@ -7,11 +7,11 @@ import MVC.Model.Player.Player;
 import static MVC.Model.Utils.Constant.RED;
 import static MVC.Model.Utils.Constant.YELLOW;
 
-public class Launcher {
+public class TerminalLauncher {
     private Game game;
     private int numberParty;
 
-    public Launcher(Game game, int numberParty){
+    public TerminalLauncher(Game game, int numberParty){
         this.game = game;
         this.numberParty = numberParty;
     }
@@ -55,7 +55,7 @@ public class Launcher {
         Player[] players = {humanPlayer, alphaBetaSortBot};
         game.initPlayer(players);
 
-        Launcher launcher = new Launcher(game, 2);
+        TerminalLauncher launcher = new TerminalLauncher(game, 2);
         launcher.startGame();
     }
 }

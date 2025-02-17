@@ -1,8 +1,8 @@
-package Player.Bot;
+package MVC.Model.Player.Bot;
 
 import MVC.Model.Algorithm.MinMax;
-import Game.Game;
-import Player.Player;
+import MVC.Model.Game.Game;
+import MVC.Model.Player.Player;
 
 public class MinMaxBot extends Player {
     private Player playerOne;

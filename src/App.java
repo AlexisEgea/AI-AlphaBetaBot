@@ -4,10 +4,10 @@ import MVC.Model.Player.Player;
 import MVC.Model.Player.Bot.AlphaBetaSortBot;
 import MVC.View.View;
 import MVC.Controller.Controller;
-import static MVC.Model.utils.Constant.RED;
-import static MVC.Model.utils.Constant.YELLOW;
+import static MVC.Model.Utils.Constant.RED;
+import static MVC.Model.Utils.Constant.YELLOW;
 
-public class app {
+public class App {
     public static void main(String[] args) {
         ConnectFourGame game = new ConnectFourGame();
         Player player1 = new HumanPlayer(RED);

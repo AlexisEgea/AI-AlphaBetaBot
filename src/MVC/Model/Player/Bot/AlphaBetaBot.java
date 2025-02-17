@@ -1,8 +1,8 @@
-package Player.Bot;
+package MVC.Model.Player.Bot;
 
 import MVC.Model.Algorithm.AlphaBeta;
-import Game.Game;
-import Player.Player;
+import MVC.Model.Game.Game;
+import MVC.Model.Player.Player;
 
 public class AlphaBetaBot extends Player {
     private Player playerOne;

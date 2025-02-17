@@ -1,14 +1,14 @@
-package Game;
+package MVC.Model.Game;
 
-import Grid.ConnectFourGrid;
+import MVC.Model.Grid.ConnectFourGrid;
 
-import Player.Player;
+import MVC.Model.Player.Player;
 
 import java.util.Arrays;
 import java.util.Stack;
 import java.util.ArrayList;
 
-import static utils.Constant.*;
+import static MVC.Model.Utils.Constant.*;
 
 public class ConnectFourGame extends Game {
     private Stack<int[]> actionHistory; // Stack to store action history
@@ -68,7 +68,7 @@ public class ConnectFourGame extends Game {
                 if (this.grid.getCell(action, line) == EMPTY) {
                     this.grid.setCell(action, line, player.getPlayerId());
                     actionHistory.push(new int[]{action, line});
-                    System.out.println("Player ID " + player.getPlayerId() + " Action: " + action);
+                    System.out.println("MVC.Model.Player ID " + player.getPlayerId() + " Action: " + action);
                     System.out.println(this.getGrid());
                     return true;
                 }
@@ -120,7 +120,7 @@ public class ConnectFourGame extends Game {
         }
 
         if (this.drawGame()) {
-            System.out.println("Grid FULL, nobody wins the game 0_0");
+            System.out.println("MVC.Model.Grid FULL, nobody wins the game 0_0");
             this.winner = null; // If nobody win the game, the winner id is 0
             return true;
         }

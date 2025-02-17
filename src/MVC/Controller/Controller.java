@@ -1,13 +1,13 @@
 package MVC.Controller;
 
-import Game.Game;
+import MVC.Model.Game.Game;
 import MVC.View.View;
-import Player.HumanPlayer;
+import MVC.Model.Player.HumanPlayer;
 
 import java.util.ArrayList;
 
 /**
- * The Controller class manages the interaction between the Game logic and the Views (observers).
+ * The Controller class manages the interaction between the MVC.Model.Game logic and the Views (observers).
  * It handles user inputs (actions), updates the views, and triggers game state changes.
  * It follows the Model-View-Controller (MVC) design pattern to separate concerns.
  */
