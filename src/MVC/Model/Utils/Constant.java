@@ -1,4 +1,4 @@
-package utils;
+package MVC.Model.utils;
 
 public class Constant {
     public final static int EMPTY = 0;

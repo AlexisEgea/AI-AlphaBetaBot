@@ -1,6 +1,6 @@
 package Player.Bot;
 
-import Algorithm.AlphaBetaSort;
+import MVC.Model.Algorithm.AlphaBetaSort;
 import Game.Game;
 import Player.Player;
 

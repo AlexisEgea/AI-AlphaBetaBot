@@ -1,6 +1,6 @@
 package Player.Bot;
 
-import Algorithm.MinMax;
+import MVC.Model.Algorithm.MinMax;
 import Game.Game;
 import Player.Player;
 

@@ -1,6 +1,6 @@
 package Player.Bot;
 
-import Algorithm.AlphaBeta;
+import MVC.Model.Algorithm.AlphaBeta;
 import Game.Game;
 import Player.Player;
 

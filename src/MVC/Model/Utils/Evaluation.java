@@ -1,9 +1,9 @@
-package utils;
+package MVC.Model.utils;
 
-import Game.Game;
-import Player.Player;
+import MVC.Model.Game.Game;
+import MVC.Model.Player.Player;
 
-import static utils.Constant.EMPTY;
+import static MVC.Model.utils.Constant.EMPTY;
 
 public class Evaluation {
     /**
