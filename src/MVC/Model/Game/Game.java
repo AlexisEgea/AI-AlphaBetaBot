@@ -29,7 +29,7 @@ public abstract class Game {
     /**
      * Initializes the players participating in the game.
      *
-     * @param players An array of MVC.Model.Player objects representing the players
+     * @param players An array of Player objects representing the players
      */
     public abstract void initPlayer(Player [] players);
 

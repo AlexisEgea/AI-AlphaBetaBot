@@ -8,11 +8,10 @@ public class RandomBot extends Player {
     private final Random random;
     private int columnSize;
 
-    public RandomBot(int playerId, int columnSize) {
-        super(playerId);
+    public RandomBot(int columnSize) {
+        super();
         this.columnSize = columnSize;
         this.random = new Random();
-
     }
 
     @Override

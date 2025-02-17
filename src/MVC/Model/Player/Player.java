@@ -1,10 +1,12 @@
 package MVC.Model.Player;
 
+import static MVC.Model.Utils.Constant.EMPTY;
+
 public abstract class Player {
     private int playerId;
 
-    public Player(int playerId){
-        this.playerId = playerId;
+    public Player(){
+        this.playerId = EMPTY;
     }
 
     /**
@@ -13,7 +15,6 @@ public abstract class Player {
      * @return The chosen action (usually an integer representing a column).
      */
     public abstract int decide();
-
 
     public int getPlayerId() {
         return playerId;

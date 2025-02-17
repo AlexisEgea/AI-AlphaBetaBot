@@ -10,8 +10,8 @@ public class AlphaBetaSortBot extends Player {
     private Game game;
     private AlphaBetaSort alphaBetaSortAlgorithm;
 
-    public AlphaBetaSortBot(int playerOneId, Player playerTwo, Game game) {
-        super(playerOneId);
+    public AlphaBetaSortBot(Player playerTwo, Game game) {
+        super();
         this.playerOne = this;
         this.playerTwo = playerTwo;
         this.game = game;

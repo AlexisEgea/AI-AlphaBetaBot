@@ -10,8 +10,8 @@ public class MinMaxBot extends Player {
     private Game game;
     private MinMax minMaxAlgorithm;
 
-    public MinMaxBot(int playerOneId, Player playerTwo, Game game) {
-        super(playerOneId);
+    public MinMaxBot(Player playerTwo, Game game) {
+        super();
         this.playerOne = this;
         this.playerTwo = playerTwo;
         this.game = game;

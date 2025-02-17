@@ -29,6 +29,9 @@ public class ConnectFourGame extends Game {
     public void initPlayer(Player [] players){
         this.players = new ArrayList<>();
         this.players.addAll(Arrays.asList(players));
+        this.players.getFirst().setPlayerId(RED);
+        this.players.getLast().setPlayerId(YELLOW);
+
         this.currentPlayer = this.players.getFirst();
     }
 
@@ -68,7 +71,7 @@ public class ConnectFourGame extends Game {
                 if (this.grid.getCell(action, line) == EMPTY) {
                     this.grid.setCell(action, line, player.getPlayerId());
                     actionHistory.push(new int[]{action, line});
-                    System.out.println("MVC.Model.Player ID " + player.getPlayerId() + " Action: " + action);
+                    System.out.println("Player ID " + player.getPlayerId() + " Action: " + action);
                     System.out.println(this.getGrid());
                     return true;
                 }
@@ -120,7 +123,7 @@ public class ConnectFourGame extends Game {
         }
 
         if (this.drawGame()) {
-            System.out.println("MVC.Model.Grid FULL, nobody wins the game 0_0");
+            System.out.println("Grid FULL, nobody wins the game 0_0");
             this.winner = null; // If nobody win the game, the winner id is 0
             return true;
         }
