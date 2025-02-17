@@ -214,10 +214,10 @@ public class View extends JFrame {
 	 */
 	public void endGame(int playerId, String message) {
 		if(playerId == RED)
-			this.currentPlayerLabel.setText("MVC.Model.Player 1 (RED) WIN !!!");
+			this.currentPlayerLabel.setText("Player 1 (RED) WIN !!!");
 		if(playerId == YELLOW)
-			this.currentPlayerLabel.setText("MVC.Model.Player 2 (YELLOW) WIN !!!");
-		else
+			this.currentPlayerLabel.setText("Player 2 (YELLOW) WIN !!!");
+		if(playerId == EMPTY)
 			this.currentPlayerLabel.setText("Nobody won this game");
 		this.getContentPane().setBackground(Color.GREEN);
 		this.enablePlayerInput(false);
