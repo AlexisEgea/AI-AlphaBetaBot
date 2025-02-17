@@ -24,11 +24,6 @@ public class ConnectFourGrid extends Grid<int[][]> {
     }
 
     @Override
-    public int[][] getGrid() {
-        return this.grid;
-    }
-
-    @Override
     public int getCell(int column, int line) {
         return this.grid[column][line];
     }
@@ -38,20 +33,40 @@ public class ConnectFourGrid extends Grid<int[][]> {
         this.grid[column][line] = value;
     }
 
+    /**
+     * Checks if a column is full. A column is considered full if its topmost row is not EMPTY.
+     *
+     * @param column The column to be checked
+     * @return True if the column is full, false otherwise
+     */
     public Boolean isColumnFull(int column) {
         return this.grid[column][0] != EMPTY;
     }
 
+    /**
+     * Checks if the connect four grid is full. A grid is full if no top column cells contain the EMPTY value.
+     *
+     * @return True if the grid is full, false otherwise
+     */
     public Boolean isGridFull() {
         for (int column = 0; column < this.columnSize; column++) {
-            for (int line = 0; line < this.lineSize; line++) {
-                if (this.grid[column][line] == EMPTY)
+            if (this.grid[column][0] == EMPTY) {
                     return false;
             }
         }
         return true;
     }
 
+    /**
+     * Converts the ConnectFour grid into a string representation.
+     * This method creates a human-readable string version of the grid.
+     * The string uses:
+     * - "·" to represent empty cells
+     * - "R" to represent red pieces
+     * - "Y" to represent yellow pieces
+     *
+     * @return A string representation of the grid
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
