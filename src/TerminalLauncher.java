@@ -45,15 +45,13 @@ public class TerminalLauncher {
 
     public static void main(String[] args) {
         ConnectFourGame game = new ConnectFourGame();
+        Player player1 = new HumanPlayer();
+//        Player player2 = new RandomBot(game.getGrid().getColumnSize());
+//        Player player2 = new MinMaxBot(player1, game);
+//        Player player2 = new AlphaBetaBot(player1, game);
+        Player player2 = new AlphaBetaSortBot(player1, game);
 
-        Player humanPlayer = new HumanPlayer(RED);
-//    MVC.Model.Player randomBot = new RandomBot(YELLOW, game.getGrid().getColumnSize());
-//    MVC.Model.Player minMaxBot = new MinMaxBot(YELLOW, humanPlayer, game);
-//    MVC.Model.Player alphaBetaBot = new AlphaBetaBot(YELLOW, humanPlayer, game);
-        Player alphaBetaSortBot = new AlphaBetaSortBot(YELLOW, humanPlayer, game);
-
-        Player[] players = {humanPlayer, alphaBetaSortBot};
-        game.initPlayer(players);
+        game.initPlayer(new Player[]{player1, player2});
 
         TerminalLauncher launcher = new TerminalLauncher(game, 2);
         launcher.startGame();
