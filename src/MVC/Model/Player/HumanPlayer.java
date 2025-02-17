@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class HumanPlayer extends Player {
     private Scanner scanner;
 
-    public HumanPlayer(int playerId) {
-        super(playerId);
+    public HumanPlayer() {
+        super();
         this.scanner = new Scanner(System.in);
     }
 

@@ -10,8 +10,8 @@ public class AlphaBetaBot extends Player {
     private Game game;
     private AlphaBeta alphaBetaAlgorithm;
 
-    public AlphaBetaBot(int playerOneId, Player playerTwo, Game game) {
-        super(playerOneId);
+    public AlphaBetaBot(Player playerTwo, Game game) {
+        super();
         this.playerOne = this;
         this.playerTwo = playerTwo;
         this.game = game;
