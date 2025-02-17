@@ -1,6 +1,6 @@
-package Player.Bot;
+package MVC.Model.Player.Bot;
 
-import Player.Player;
+import MVC.Model.Player.Player;
 
 import java.util.Random;
 

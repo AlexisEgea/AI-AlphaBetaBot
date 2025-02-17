@@ -1,15 +1,15 @@
 package MVC.View;
 
-import Game.ConnectFourGame;
+import MVC.Model.Game.ConnectFourGame;
 import MVC.Controller.Controller;
 import MVC.View.Panel.CirclePanel;
-import Player.Player;
-import Player.HumanPlayer;
+import MVC.Model.Player.Player;
+import MVC.Model.Player.HumanPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static utils.Constant.*;
+import static MVC.Model.Utils.Constant.*;
 
 public class View extends JFrame {
 	private CirclePanel[][] grid;
@@ -59,7 +59,7 @@ public class View extends JFrame {
 		}
 
 		// Row to specify which player have to play
-		this.currentPlayerLabel = new JLabel("Player 1's turn (RED)", SwingConstants.CENTER);
+		this.currentPlayerLabel = new JLabel("MVC.Model.Player 1's turn (RED)", SwingConstants.CENTER);
 		this.currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		this.currentPlayerLabel.setForeground(Color.BLACK);
 		this.currentPlayerLabel.setBackground(Color.RED);
@@ -179,10 +179,10 @@ public class View extends JFrame {
 	public void updateCurrentPlayer(int playerId) {
 		if (playerId == RED) {
 			this.getContentPane().setBackground(Color.RED);
-			this.currentPlayerLabel.setText("Player 1's turn (RED)");
+			this.currentPlayerLabel.setText("MVC.Model.Player 1's turn (RED)");
 		} else {
 			this.getContentPane().setBackground(Color.YELLOW);
-			this.currentPlayerLabel.setText("Player 2's turn (YELLOW)");
+			this.currentPlayerLabel.setText("MVC.Model.Player 2's turn (YELLOW)");
 		}
 	}
 
@@ -214,9 +214,9 @@ public class View extends JFrame {
 	 */
 	public void endGame(int playerId, String message) {
 		if(playerId == RED)
-			this.currentPlayerLabel.setText("Player 1 (RED) WIN !!!");
+			this.currentPlayerLabel.setText("MVC.Model.Player 1 (RED) WIN !!!");
 		if(playerId == YELLOW)
-			this.currentPlayerLabel.setText("Player 2 (YELLOW) WIN !!!");
+			this.currentPlayerLabel.setText("MVC.Model.Player 2 (YELLOW) WIN !!!");
 		else
 			this.currentPlayerLabel.setText("Nobody won this game");
 		this.getContentPane().setBackground(Color.GREEN);

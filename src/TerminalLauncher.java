@@ -1,10 +1,17 @@
-package Game;
+import MVC.Model.Game.ConnectFourGame;
+import MVC.Model.Game.Game;
+import MVC.Model.Player.Bot.AlphaBetaSortBot;
+import MVC.Model.Player.HumanPlayer;
+import MVC.Model.Player.Player;
 
-public class Launcher {
+import static MVC.Model.Utils.Constant.RED;
+import static MVC.Model.Utils.Constant.YELLOW;
+
+public class TerminalLauncher {
     private Game game;
     private int numberParty;
 
-    public Launcher(Game game, int numberParty){
+    public TerminalLauncher(Game game, int numberParty){
         this.game = game;
         this.numberParty = numberParty;
     }
@@ -34,5 +41,21 @@ public class Launcher {
             }
             this.game.resetGame();
         }
+    }
+
+    public static void main(String[] args) {
+        ConnectFourGame game = new ConnectFourGame();
+
+        Player humanPlayer = new HumanPlayer(RED);
+//    MVC.Model.Player randomBot = new RandomBot(YELLOW, game.getGrid().getColumnSize());
+//    MVC.Model.Player minMaxBot = new MinMaxBot(YELLOW, humanPlayer, game);
+//    MVC.Model.Player alphaBetaBot = new AlphaBetaBot(YELLOW, humanPlayer, game);
+        Player alphaBetaSortBot = new AlphaBetaSortBot(YELLOW, humanPlayer, game);
+
+        Player[] players = {humanPlayer, alphaBetaSortBot};
+        game.initPlayer(players);
+
+        TerminalLauncher launcher = new TerminalLauncher(game, 2);
+        launcher.startGame();
     }
 }

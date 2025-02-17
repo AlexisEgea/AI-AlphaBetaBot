@@ -1,6 +1,6 @@
-package Grid;
+package MVC.Model.Grid;
 
-import static utils.Constant.*;
+import static MVC.Model.Utils.Constant.*;
 
 public class ConnectFourGrid extends Grid<int[][]> {
     public ConnectFourGrid(int columnSize, int lineSize){

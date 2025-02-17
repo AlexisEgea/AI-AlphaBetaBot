@@ -1,8 +1,8 @@
-package Algorithm;
+package MVC.Model.Algorithm;
 
-import Game.Game;
-import Player.Player;
-import utils.Evaluation;
+import MVC.Model.Game.Game;
+import MVC.Model.Player.Player;
+import MVC.Model.Utils.Evaluation;
 
 import java.util.ArrayList;
 

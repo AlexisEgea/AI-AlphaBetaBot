@@ -1,4 +1,4 @@
-package Player;
+package MVC.Model.Player;
 
 public abstract class Player {
     private int playerId;
@@ -8,7 +8,7 @@ public abstract class Player {
     }
 
     /**
-     *  Player's decision-making logic for choosing an action in the game.
+     *  MVC.Model.Player's decision-making logic for choosing an action in the game.
      *
      * @return The chosen action (usually an integer representing a column).
      */

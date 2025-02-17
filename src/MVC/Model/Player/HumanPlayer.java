@@ -1,4 +1,4 @@
-package Player;
+package MVC.Model.Player;
 
 import java.util.Scanner;
 
