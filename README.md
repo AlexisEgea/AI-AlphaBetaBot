@@ -38,44 +38,43 @@ This project allows you to represent five types of players:
 
 #### Directory Structure:
 
-TODO
-
 ```bash
 src
-    ├── App.java                           
-    ├── MVC                                
+    ├── MVC                                    # Model-View-Controller (MVC) implementation
     │   ├── Controller
-    │   │   └── Controller.java
-    │   ├── Model
-    │   │   ├── Algorithm
-    │   │   │   ├── Algorithm.java
-    │   │   │   ├── AlphaBeta.java
-    │   │   │   ├── AlphaBetaSort.java
-    │   │   │   └── MinMax.java
-    │   │   ├── Game
-    │   │   │   ├── ConnectFourGame.java
-    │   │   │   └── Game.java
-    │   │   ├── Grid
-    │   │   │   ├── ConnectFourGrid.java
-    │   │   │   └── Grid.java
+    │   │   └── Controller.java                # Main controller class handling game logic and interactions
+    │   ├── Model            
+    │   │   ├── Algorithm        
+    │   │   │   ├── Algorithm.java             # Abstract class for AI algorithms
+    │   │   │   ├── AlphaBeta.java             # Implementation of the Alpha-Beta pruning algorithm
+    │   │   │   ├── AlphaBetaSort.java         # Optimized Alpha-Beta algorithm with sorting
+    │   │   │   └── MinMax.java                # Implementation of the Min-Max algorithm
+    │   │   ├── Game                   
+    │   │   │   ├── ConnectFourGame.java       # Game implementation for Connect Four
+    │   │   │   └── Game.java                  # Base Game Class
+    │   │   ├── Grid      
+    │   │   │   ├── ConnectFourGrid.java       # Grid implementation for Connect Four
+    │   │   │   └── Grid.java                  # Base Grid Class
     │   │   ├── Player
-    │   │   │   ├── Bot
-    │   │   │   │   ├── AlphaBetaBot.java
-    │   │   │   │   ├── AlphaBetaSortBot.java
-    │   │   │   │   ├── MinMaxBot.java
-    │   │   │   │   └── RandomBot.java
-    │   │   │   ├── HumanPlayer.java
-    │   │   │   └── Player.java
-    │   │   └── Utils
-    │   │       ├── Constant.java
-    │   │       └── Evaluation.java
-    │   └── View
-    │       ├── Panel
-    │       │   └── CirclePanel.java
-    │       ├── PlayBotActionListener.java
-    │       ├── PlayHumanActionListener.java
-    │       └── View.java
-    └── TerminalLauncher.java
+    │   │   │   ├── Bot                        # Directory for AI players (bots)
+    │   │   │   │   ├── AlphaBetaBot.java      # Bot using the Alpha-Beta algorithm
+    │   │   │   │   ├── AlphaBetaSortBot.java  # Bot using the optimized Alpha-Beta algorithm
+    │   │   │   │   ├── MinMaxBot.java         # Bot using the Min-Max algorithm
+    │   │   │   │   └── RandomBot.java         # Bot making random moves
+    │   │   │   ├── HumanPlayer.java           # Class representing a human player
+    │   │   │   └── Player.java                # Abstract class for players
+    │   │   └── Utils     
+    │   │       ├── Constant.java              # Class storing constants of the game
+    │   │       └── Evaluation.java            # Class for evaluating game states (AI heuristic)
+    │   └── View             
+    │       ├── Panel                          
+    │       │   └── CirclePanel.java           # Panel for rendering circular game pieces
+    │       ├── PlayBotActionListener.java     # Event listener for Bot moves
+    │       ├── PlayHumanActionListener.java   # Event listener for Human moves
+    │       └── View.java                      # Main GUI class for displaying the game
+    ├── App.java                               # Main class to launch the graphical application
+    └── TerminalLauncher.java                  # Main class to launch the game in terminal mode
+
 ```
 
 ## Requirement
