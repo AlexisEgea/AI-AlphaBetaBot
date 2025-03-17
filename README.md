@@ -26,7 +26,7 @@ Connect Four is a two-player board game where the goal is to connect four of one
 - The first player to align four discs in any direction wins.
 - If the grid is full with no winner, the game ends in a draw.
 
-## Project Features
+## Player - Bot
 
 This project allows you to represent five types of players:
 
