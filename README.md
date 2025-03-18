@@ -79,7 +79,7 @@ src
 ## Requirement
 
 - Having Java installed on your machine.  
-Here is the configuration used for the development this project:
+Here is the configuration used for the development of this project:
 ```bash
 openjdk 21.0.6 2025-01-21
 OpenJDK Runtime Environment (build 21.0.6+7-Ubuntu-124.04.1)
