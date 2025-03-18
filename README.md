@@ -4,6 +4,15 @@
 
 This project implements a bot using the **Minimax** algorithm and **Alpha-Beta Pruning** on the Four Connect game.
 
+#### Game: Connect Four
+
+Connect Four is a two-player board game where the goal is to connect four of one's own discs in a row, column, or diagonal before the opponent does.
+
+- Players take turns dropping colored discs into a vertical grid.
+- The disc falls to the lowest available slot in the chosen column.
+- The first player to align four discs in any direction wins.
+- If the grid is full with no winner, the game ends in a draw.
+
 #### Minimax Algorithm
 The **Minimax** algorithm is a decision-making strategy used in turn-based games.  
 It assumes that the opponent plays optimally (maximise the score) and tries to minimize the player's score or vice versa. The algorithm explores all possible game states up to a certain depth and selects the move that maximizes the player's minimum gain.
@@ -15,18 +24,7 @@ It assumes that the opponent plays optimally (maximise the score) and tries to m
 
 By pruning branches that cannot affect the final decision, Alpha-Beta Pruning significantly improves efficiency.
 
-### Game: Connect Four
-
-The tests conducted for this project are based on the game **Connect Four**.
-
-Connect Four is a two-player board game where the goal is to connect four of one's own discs in a row, column, or diagonal before the opponent does.
-
-- Players take turns dropping colored discs into a vertical grid.
-- The disc falls to the lowest available slot in the chosen column.
-- The first player to align four discs in any direction wins.
-- If the grid is full with no winner, the game ends in a draw.
-
-## Player - Bot
+#### Player - Bot
 
 This project allows you to represent five types of players:
 
@@ -36,7 +34,8 @@ This project allows you to represent five types of players:
 4. **Random Bot**: A bot that takes random actions during gameplay.
 5. **Human Player**: A mode where you can directly play the game.
 
-#### Directory Structure:
+---
+### Directory Structure:
 
 ```bash
 src
@@ -79,11 +78,17 @@ src
 
 ## Requirement
 
-TODO
+- Having Java installed on your machine.
+Here is the configuration used for the development this project:
+```bash
+openjdk 21.0.6 2025-01-21
+OpenJDK Runtime Environment (build 21.0.6+7-Ubuntu-124.04.1)
+OpenJDK 64-Bit Server VM (build 21.0.6+7-Ubuntu-124.04.1, mixed mode, sharing)
+```
 
 ## Execution 
 
-TODO
+For this project, the execution explanation is referred here: https://github.com/AlexisEgea/AI-AlphaBetaBot/tree/readme/ALX/docs#readme
 
 ## Contact Information
 
