@@ -39,7 +39,7 @@ public class AlphaBetaSort implements Algorithm {
         this.evaluation = 0;
 
         // Retrieve all possible actions
-        ArrayList<Integer> actions = getSortPossibleActions(game);
+        ArrayList<Integer> actions = game.getPossibleActions();
         for (Integer action : actions) {
             // Simulate playing the action
             game.playAction(player, action);
@@ -49,25 +49,16 @@ public class AlphaBetaSort implements Algorithm {
                 if(score > bestScore) {
                     bestScore = score;
                     bestAction = action;
-                    alpha = Math.max(alpha, bestScore);
                 }
             } else { // Minimizing player
                 score = this.alphaBetaSort(game, this.players[1], this.dept, alpha, beta);
                 if (score < bestScore) {
                     bestScore = score;
                     bestAction = action;
-                    beta = Math.min(beta, bestScore);
                 }
             }
             // Undo the action to restore the game state
             game.undoAction();
-
-            // Alpha-beta pruning:
-            // Cut off remaining branches as they won’t influence the final decision.
-            if(alpha >= beta){
-                System.out.println("evaluation: " + evaluation);
-                return bestAction;
-            }
         }
         System.out.println("evaluation: " + evaluation);
         return bestAction;
