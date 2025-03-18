@@ -88,7 +88,8 @@ OpenJDK 64-Bit Server VM (build 21.0.6+7-Ubuntu-124.04.1, mixed mode, sharing)
 
 ## Execution 
 
-For this project, the execution explanation is referred here: https://github.com/AlexisEgea/AI-AlphaBetaBot/tree/readme/ALX/docs#readme
+For this project, the execution explanation is referred here: 
+  https://github.com/AlexisEgea/AI-AlphaBetaBot/tree/readme/ALX/docs#readme
 
 ## Contact Information
 
