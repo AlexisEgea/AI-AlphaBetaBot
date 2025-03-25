@@ -71,7 +71,8 @@ src
     │       ├── PlayBotActionListener.java     # Event listener for Bot moves
     │       ├── PlayHumanActionListener.java   # Event listener for Human moves
     │       └── View.java                      # Main GUI class for displaying the game
-    ├── App.java                               # Main class to launch the graphical application
+    ├── AppUserFirst.java                      # Main class to launch the graphical application and play first
+    ├── AppUserFirst.java                      # Main class to launch the graphical application and play second
     └── TerminalLauncher.java                  # Main class to launch the game in terminal mode
 
 ```
@@ -89,7 +90,7 @@ OpenJDK 64-Bit Server VM (build 21.0.6+7-Ubuntu-124.04.1, mixed mode, sharing)
 ## Execution 
 
 For this project, the execution explanation is referred here: 
-  https://github.com/AlexisEgea/AI-AlphaBetaBot/tree/readme/ALX/docs#readme
+  [https://github.com/AlexisEgea/AI-AlphaBetaBot/tree/main/ALX/docs#readme](https://github.com/AlexisEgea/AI-AlphaBetaBot/blob/main/docs/README.md)
 
 ## Contact Information
 
