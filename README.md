@@ -71,7 +71,8 @@ src
     │       ├── PlayBotActionListener.java     # Event listener for Bot moves
     │       ├── PlayHumanActionListener.java   # Event listener for Human moves
     │       └── View.java                      # Main GUI class for displaying the game
-    ├── App.java                               # Main class to launch the graphical application
+    ├── AppUserFirst.java                      # Main class to launch the graphical application and play first
+    ├── AppUserFirst.java                      # Main class to launch the graphical application and play second
     └── TerminalLauncher.java                  # Main class to launch the game in terminal mode
 
 ```
